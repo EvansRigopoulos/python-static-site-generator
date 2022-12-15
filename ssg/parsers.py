@@ -4,8 +4,8 @@ import shutil
 
 class Parser:
     
-    extensions = []
-    extensions:str
+    extensions = [str]
+    
 
     def valid_extensions(extension):
         return extension in self.extensions
