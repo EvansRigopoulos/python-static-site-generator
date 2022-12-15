@@ -4,40 +4,36 @@ import shutil
 
 class Parser:
     
-    extensions = [str]
+    extensions:List[str] = []
     
 
-    def valid_extensions(extension):
+    def valid_extensions(self, extension):
         return extension in self.extensions
 
-    def parse(path:Path,source:Path,dest:Path) -> Path:
+    def parse(self,path:Path,source:Path,dest:Path) :
         raise NotImplementedError
 
-    def read(path):
-        with open(path) as file:
-            return read(file)
+    def read(self, path):
+        with open(path,"r") as file:
+            return file.read()
 
-    def write(path,dest,content,ext =".html"):
-        full_path = dest / with_suffix(ext).name
-        with open(full_path) as file:
+    def write(self, path, dest, content, ext =".html"):
+        full_path = dest / path.with_suffix(ext).name
+        with open(full_path,"w") as file:
             file.write(content)
 
-    def copy(path,source,dest):
-        shutil.copy2(path,dest / source)
+    def copy(self, path, source, dest):
+        shutil.copy2(path , dest / path.relative_to(source))
 
 
-    class ResourceParser:
+class ResourceParser(Parser):
 
-        extensions = [".jpeg",".png",".gif",".css",".html"]
+    extensions = [".jpeg",".png",".gif",".css",".html"]
+    def parse(self, path:Path, source:Path, dest:Path) :
+        raise NotImplementedError
+    def copy(path, source, dest):
+        super.copy()
+        
 
-        def parse(path:Path,source:Path,dest:Path) -> Path:
-            raise NotImplementedError
 
-        def copy(path,source,dest):
-            super.copy()
-            
-
-    
-
-    
         
